@@ -1,0 +1,60 @@
+## Problem
+Bir veri setindeki bazı özelliklerin (sütunların) değerleri diğerlerinden çok büyük ya da çok küçük olabilir. Örneğin:
+- Ball Diameter: 100, 200, 300 gibi büyük sayılar.
+- Composite Matrix Thickness: 0.5, 1.0, 1.5 gibi küçük sayılar.
+
+Bu durum, bazı makine öğrenimi modellerini yanıltabilir. Çünkü modeller, büyük sayılara daha fazla önem verir. Bu sorunu çözmek için tüm değerleri aynı ölçeğe getiririz. İşte bu işlemin adı standartlaştırmadır.
+
+---
+
+## Standartlaştırma Nedir?
+Standartlaştırma, veri setindeki her bir sütunu şu şekilde dönüştürür:
+1. **Ortalaması 0 olacak** (Merkezi bir noktaya çekiyoruz).
+2. **Standart sapması 1 olacak** (Değerler küçülüp büyüklüğe duyarsız hale geliyor).
+
+Matematiksel formül:
+z = (x - μ) / σ
+- x: Bir veri değeridir.
+- μ: O sütunun ortalamasıdır.
+- σ: O sütunun standart sapmasıdır.
+- z: Yeni ölçeklendirilmiş değer.
+
+---
+
+## Kodunuzdaki StandardScaler Ne Yapıyor?
+**Özellikler:**
+- `Ball Diameter` (Örneğin: 100, 200, 300)
+- `Composite Matrix Thickness` (Örneğin: 0.5, 1.0, 1.5)
+
+**Özellikleri Standartlaştırma:**
+- `Ball Diameter` ve `Composite Matrix Thickness` değerlerini küçültüp büyüklüğe duyarsız hale getiriyor.
+- Değerlerin ortalamasını 0 yapıyor.
+- Değerlerin standart sapmasını 1 yapıyor.
+
+---
+
+## Örnek
+Bir veri setinde iki sütun olsun:
+
+| Ball Diameter | Composite Matrix Thickness |
+|---------------|-----------------------------|
+| 100           | 0.5                         |
+| 200           | 1.0                         |
+| 300           | 1.5                         |
+
+**StandardScaler Uygulaması:**
+```python
+from sklearn.preprocessing import StandardScaler
+import numpy as np
+
+# Veriyi oluştur
+X = np.array([[100, 0.5],
+              [200, 1.0],
+              [300, 1.5]])
+
+# StandardScaler'ı uygula
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+print("Ölçeklendirilmiş Veri:")
+print(X_scaled)

@@ -1,0 +1,36 @@
+model.fit(X_scaled, y) Ne İşe Yarıyor?
+=====================================
+
+Bu satır, SVR (Support Vector Regression) modelini verilen veri setine göre eğitir. Modelin, girdiler ve hedefler arasındaki ilişkiyi öğrenmesini sağlar.
+
+---
+
+fit Metodunun İşlevi:
+---------------------
+1. **Veri Setini Kullanarak Modeli Eğitmek:**
+   - `X_scaled`: Eğitim için kullanılan standartlaştırılmış özellikler (girdiler).
+   - `y`: Bu girdilere karşılık gelen hedef değerler (çıktılar).
+   - `fit` metodu, bu iki veri kümesi arasındaki ilişkiyi öğrenmek için kullanılır.
+
+2. **Model Parametrelerini Optimize Etmek:**
+   - Model, girdiler ve hedefler arasındaki en iyi ilişkiyi bulmak için belirlenen çekirdek fonksiyonuna (`kernel`) ve hiperparametrelere (`C`, `gamma`, `epsilon`) göre eğitilir.
+
+3. **Destek Vektörlerini Belirlemek:**
+   - SVR algoritması, yalnızca veriler arasında en kritik olanları (destek vektörleri) öğrenir.
+   - Bu, modelin tahmin yaparken daha az veri kullanmasını sağlar.
+
+---
+
+Eğitim Süreci:
+--------------
+1. **Verilerin Girdisi (`X_scaled`) ve Hedefi (`y`):**
+   - `X_scaled`: Eğitim için kullanılan özellikler (örneğin Ball Diameter, Composite Matrix Thickness).
+   - `y`: Bu özelliklere karşılık gelen hedef değerler (örneğin Ballistic Limit).
+
+2. **Modelin Çekirdek Fonksiyonu:**
+   - Çekirdek fonksiyonu, `kernel` parametresiyle belirlenir (örneğin, `'rbf'`, `'linear'`, `'poly'`).
+   - Girdiler, çekirdek fonksiyonuna göre dönüştürülerek daha yüksek boyutlu bir uzaya aktarılır (gerekirse).
+
+3. **Optimal Hiper Düzlemin Bulunması:**
+   - Model, girdiler ve hedef veriler arasındaki ilişkiyi en iyi şekilde temsil eden bir hiper düzlem veya eğriyi bulur.
+   - Amaç, tahmin hatalarını minimize eden bir hiper düzlem oluşturmak.

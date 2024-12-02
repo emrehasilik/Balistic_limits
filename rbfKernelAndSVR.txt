@@ -1,0 +1,80 @@
+RBF Çekirdeği (Radial Basis Function)
+=====================================
+
+RBF (Radial Basis Function), **Radyal Tabanlı Fonksiyon Çekirdeği** anlamına gelir.
+Bu çekirdek, SVR ve SVM algoritmalarında en yaygın kullanılan doğrusal olmayan çekirdektir.
+
+---
+
+RBF Çekirdeğinin İşlevi:
+-------------------------
+RBF çekirdeği, iki veri noktası arasındaki mesafeyi ölçerek bu mesafeye dayalı bir benzerlik skoru oluşturur. Bu skor, çekirdek fonksiyonu tarafından şu şekilde hesaplanır:
+
+K(x, x') = exp(-γ * ||x - x'||²)
+
+Burada:
+- **K(x, x')**: İki veri noktası arasındaki çekirdek fonksiyonunun sonucu (benzerlik).
+- **x ve x'**: İki veri noktası.
+- **||x - x'||²**: İki veri noktası arasındaki Öklidyen mesafenin karesi.
+- **γ (gamma)**: Çekirdek parametresi.
+  - Küçük γ değerleri: Geniş bir etki alanı oluşturur (genel bir model).
+  - Büyük γ değerleri: Yerel bir etki alanı oluşturur (daha detaylı bir model, overfitting riski artar).
+
+---
+
+RBF Çekirdeğinin Özellikleri:
+-----------------------------
+1. **Doğrusal Olmayan Veriler:**
+   - Verileri daha yüksek boyutlu bir uzaya dönüştürerek doğrusal olmayan ilişkileri modellemeyi sağlar.
+   - Örneğin, bir eğri boyunca dağılan veriler için uygun bir regresyon eğrisi çizebilir.
+
+
+2. **Esneklik:**
+   - RBF, esnek bir fonksiyon olduğu için birçok farklı veri türüyle etkili bir şekilde çalışabilir.
+
+---
+
+RBF Çekirdeğinin Avantajları:
+------------------------------
+- Çoğu doğrusal olmayan problemde iyi performans gösterir.
+- Küçük veri setlerinde genellikle daha iyi sonuç verir.
+- **Parametreleri (γ)** ile çekirdeğin etki alanını kontrol etmek mümkündür.
+
+---
+
+model = SVR(kernel='rbf', C=100, gamma='auto', epsilon=0.1) Ne Anlama Gelir?
+----------------------------------------------------------------------------
+
+1. **kernel='rbf':**
+   - Çekirdek türü olarak **RBF (Radial Basis Function)** seçilmiştir.
+   - Bu, modelin doğrusal olmayan ilişkileri öğrenmesini sağlar.
+
+2. **C=100:**
+   - **Ceza Parametresi (C):**
+     - Modelin veriye ne kadar sıkı uyacağını kontrol eder.
+     - Yüksek bir `C` değeri (100), modelin veriye daha sıkı uyacağını (hataları minimize edeceğini) gösterir.
+     - Daha hassas bir model oluşturur ancak overfitting riski artabilir.
+
+3. **gamma='auto':**
+   - **Gamma Parametresi (γ):**
+     - Çekirdek fonksiyonunun etki alanını kontrol eder.
+     - `'auto'` seçildiğinde, γ değeri özellik sayısının (\( \frac{1}{n_{\text{features}}} \)) tersine eşit olur.
+     - Bu, genelde küçük bir gamma değeri seçildiği anlamına gelir (genel bir model).
+
+4. **epsilon=0.1:**
+   - **Epsilon-Tüpü:**
+     - Modelin tahmin ettiği değerler ile gerçek değerler arasındaki farkın belirli bir tolerans içinde olmasını sağlar.
+     - `epsilon=0.1` ise, model ±0.1 hata toleransıyla çalışır.
+     - Daha küçük `epsilon` değeri, modelin daha hassas olmasını sağlar.
+
+---
+
+Özet:
+-----
+`SVR(kernel='rbf', C=100, gamma='auto', epsilon=0.1)` ifadesi:
+- **RBF çekirdeği** kullanılarak doğrusal olmayan bir regresyon modeli oluşturur.
+- Veriye sıkı uyan bir model (**C=100**) hedeflenmiştir.
+- **Gamma** değeri, veri setinin özellik sayısına göre otomatik olarak ayarlanır.
+- Model ±0.1 hata toleransı ile tahmin yapar.
+
+Bu model, doğrusal olmayan regresyon problemlerini çözmek için uygundur.

@@ -1,0 +1,78 @@
+KFold Çapraz Doğrulama ve MAPE Hesaplaması
+==========================================
+
+Kod Bloğu:
+----------
+cv = KFold(n_splits=5, shuffle=True, random_state=42)
+mape_scores = cross_val_score(model, X_scaled, y, cv=cv, scoring='neg_mean_absolute_percentage_error')
+mean_mape = -np.mean(mape_scores) * 100  # Yüzdeye çevirme
+
+---
+
+Bu Kod Bloğunda Yapılan İşlemler:
+=================================
+
+1. **KFold Çapraz Doğrulama:**
+   - `cv = KFold(n_splits=5, shuffle=True, random_state=42)` ifadesi, KFold çapraz doğrulama nesnesini oluşturur.
+   - Parametreler:
+     - `n_splits=5`: Veriyi 5 parçaya böler. Model, her %20'lik test seti üzerinde bir kez çalıştırılır.
+     - `shuffle=True`: Veriler doğrulama öncesinde karıştırılır.
+     - `random_state=42`: Karıştırma işlemini sabitler, böylece her çalıştırmada aynı bölünme yapılır.
+
+2. **MAPE (Mean Absolute Percentage Error) Hesaplama:**
+   - `cross_val_score` işlevi, modelin çapraz doğrulama sırasında her katmandaki hatasını ölçer.
+   - Kullanılan metrik: `neg_mean_absolute_percentage_error`
+     - Bu metrik, tahmin edilen değerler ile gerçek değerler arasındaki yüzde farkını hesaplar.
+     - "neg" ön eki, sklearn tarafından küçük hataların daha iyi olduğu varsayımından kaynaklanır.
+
+3. **Negatif MAPE'nin Pozitife Çevrilmesi ve Ortalama Alınması:**
+   - `mape_scores` negatif değerler döndürür. Örneğin:
+     ```
+     mape_scores = [-0.05, -0.04, -0.06, -0.045, -0.05]
+     ```
+   - Bu negatif değerler pozitife çevrilir:
+     ```
+     positive_mape_scores = [0.05, 0.04, 0.06, 0.045, 0.05]
+     ```
+   - Tüm değerlerin ortalaması alınır:
+     ```
+     mean_mape = np.mean([0.05, 0.04, 0.06, 0.045, 0.05])
+               = 0.049
+     ```
+   - Yüzdelik formatına çevrilir:
+     ```
+     mean_mape = 0.049 * 100 = 4.9%
+     ```
+
+---
+
+MAPE Neden Kullanılır?
+======================
+1. **Hata Ölçümü:** Gerçek değerler ile tahmin edilen değerler arasındaki yüzdelik farkı ölçer.
+2. **Karşılaştırma Kolaylığı:** Farklı veri setleri veya modeller arasında kıyaslama yapmayı kolaylaştırır.
+3. **Negatif Değerlerden Bağımsızdır:** Sadece yüzde farklar üzerinden çalışır; negatif veya pozitif değer fark etmez.
+
+---
+
+Örnek:
+------
+Varsayalım ki, çapraz doğrulama sonuçları aşağıdaki gibidir:
+mape_scores = [-0.05, -0.04, -0.06, -0.045, -0.05]
+
+Hesaplama:
+1. Negatif değerlerden kurtulun:
+mape_scores = [0.05, 0.04, 0.06, 0.045, 0.05]
+2. Ortalama alın:
+mean_mape = np.mean([0.05, 0.04, 0.06, 0.045, 0.05]) = 0.049
+3. Yüzdelik formatına çevirin:
+mean_mape = 0.049 * 100 = 4.9%
+Sonuç:
+------
+Modelin tahmini, gerçek değerlerden ortalama olarak %4.9 sapmaktadır.
+
+---
+
+Özet:
+=====
+Bu kod, modelin doğruluğunu çapraz doğrulama ile değerlendirir ve **MAPE metriğini** kullanarak modelin genel hata oranını yüzdelik olarak döndürür. Çapraz doğrulama sayesinde modelin genelleme yeteneği (overfitting/underfitting durumu) anlaşılabilir.
+

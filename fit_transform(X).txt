@@ -1,0 +1,71 @@
+X_scaled = scaler_X.fit_transform(X) Ne Yapar?
+===========================================
+
+## 1. `fit_transform` Metodu Nedir?
+- **`fit` kısmı:** 
+  - `StandardScaler`, `X` veri kümesinin ortalamasını (µ) ve standart sapmasını (σ) hesaplar.
+  - Bu hesaplamalar, ölçeklendirme işlemi için gereklidir.
+
+- **`transform` kısmı:**
+  - Hesaplanan ortalama (µ) ve standart sapma (σ) değerleri kullanılarak, `X` veri kümesindeki her bir değer, şu formüle göre dönüştürülür:
+    z = (x - µ) / σ
+    - x: Orijinal değer
+    - µ: Sütunun ortalaması
+    - σ: Sütunun standart sapması
+    - z: Standartlaştırılmış değer
+
+**Sonuç:** Veriler, ortalaması 0 ve standart sapması 1 olan bir ölçeğe dönüştürülür.
+
+---
+
+## 2. `X` ve `X_scaled` Nedir?
+- **`X` (Orijinal Veri):**
+  - `X`, standartlaştırılmadan önceki orijinal veri kümesini ifade eder.
+  - Örneğin:
+    ```
+    X = [[100, 0.5],
+         [200, 1.0],
+         [300, 1.5]]
+    ```
+
+- **`X_scaled` (Standartlaştırılmış Veri):**
+  - `X_scaled`, standartlaştırma işleminden sonra oluşturulan yeni veri kümesidir.
+  - Örneğin:
+    ```
+    X_scaled = [[-1.22474487, -1.22474487],
+                [ 0.         ,  0.         ],
+                [ 1.22474487,  1.22474487]]
+    ```
+
+---
+
+## 3. Neden Bu İşlem Yapılıyor?
+1. **Farklı Ölçekler:**
+   - Eğer veri kümenizdeki sütunlar farklı ölçeklerdeyse (örneğin: biri 100-300 arasında, diğeri 0.5-1.5 arasında), bu durum model performansını bozabilir.
+
+2. **Mesafeye Duyarlılık:**
+   - Bazı algoritmalar (örneğin: SVM, kNN, k-means) mesafeleri hesaplar. Büyük ölçekli değerler, mesafeyi yanlış etkileyebilir. Standartlaştırma bu sorunu çözer.
+
+3. **Daha İyi Performans:**
+   - Özellikler aynı ölçeğe getirildiğinde, modelin daha dengeli ve doğru sonuçlar vermesi sağlanır.
+
+---
+
+## 4. Örnek Kod:
+Aşağıdaki kod, `fit_transform` işlemini örneklemektedir:
+
+```python
+from sklearn.preprocessing import StandardScaler
+import numpy as np
+
+# Veriyi oluştur
+X = np.array([[100, 0.5],
+              [200, 1.0],
+              [300, 1.5]])
+
+# StandardScaler'ı uygula
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+print("Ölçeklendirilmiş Veri:")
+print(X_scaled)
